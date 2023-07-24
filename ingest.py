@@ -115,10 +115,15 @@ def split_documents(documents: list[Document]) -> tuple[list[Document], list[Doc
     ),
     help="Device to run on. (Default is cuda)",
 )
-def main(device_type):
+@click.option(
+    "--source_directory",
+    default=SOURCE_DIRECTORY,
+    type=str
+)
+def main(device_type, source_directory):
     # Load documents and split in chunks
-    logging.info(f"Loading documents from {SOURCE_DIRECTORY}")
-    documents = load_documents(SOURCE_DIRECTORY)
+    logging.info(f"Loading documents from {source_directory}")
+    documents = load_documents(source_directory)
     text_documents, python_documents = split_documents(documents)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     python_splitter = RecursiveCharacterTextSplitter.from_language(
@@ -126,7 +131,7 @@ def main(device_type):
     )
     texts = text_splitter.split_documents(text_documents)
     texts.extend(python_splitter.split_documents(python_documents))
-    logging.info(f"Loaded {len(documents)} documents from {SOURCE_DIRECTORY}")
+    logging.info(f"Loaded {len(documents)} documents from {source_directory}")
     logging.info(f"Split into {len(texts)} chunks of text")
 
     # Create embeddings
