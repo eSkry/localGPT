@@ -43,9 +43,7 @@ def load_document_batch(filepaths):
 
 def load_documents(source_dir: str) -> list[Document]:
     # Loads all documents from the source documents directory
-    all_files = os.listdir(source_dir)
-    paths = []
-    
+    paths = []    
     supported_extensions = tuple(DOCUMENT_MAP.keys())
     for root, directories, files in os.walk(source_dir):
         for file in files:
