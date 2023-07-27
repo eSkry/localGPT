@@ -18,7 +18,7 @@ Install conda
 conda create -n localGPT
 ```
 
-Activate 
+Activate
 
 ```shell
 conda activate localGPT
@@ -30,6 +30,14 @@ In order to set your environment up to run the code here, first install all requ
 pip install -r requirements.txt
 ```
 
+
+If you want to use BLAS or Metal with [llama-cpp](<(https://github.com/abetlen/llama-cpp-python#installation-with-openblas--cublas--clblast--metal)>) you can set appropriate flags:
+
+```shell
+# Example: cuBLAS
+CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install -r requirements.txt
+```
+
 Then install AutoGPTQ - if you want to run quantized models for GPU
 
 ```shell
@@ -39,7 +47,7 @@ git checkout v0.2.2
 pip install .
 ```
 
-For more support on [AutoGPTQ] (https://github.com/PanQiWei/AutoGPTQ).
+For more support on [AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ).
 
 ## Test dataset
 
@@ -57,7 +65,7 @@ Run the following command to ingest all the data.
 `defaults to cuda`
 
 ```shell
-python ingest.py 
+python ingest.py
 ```
 
 Use the device type argument to specify a given device.
@@ -120,7 +128,7 @@ GGML quantized models for Apple Silicon (M1/M2) are supported through the llama-
 
 ## Troubleshooting
 
-**Install MPS:**  
+**Install MPS:**
 1- Follow this [page](https://developer.apple.com/metal/pytorch/) to build up PyTorch with Metal Performance Shaders (MPS) support. PyTorch uses the new MPS backend for GPU training acceleration. It is good practice to verify mps support using a simple Python script as mentioned in the provided link.
 
 2- By following the page, here is an example of what you may initiate in your terminal
@@ -136,7 +144,7 @@ pip install pdfminer.six
 pip install xformers
 ```
 
-**Upgrade packages:**  
+**Upgrade packages:**
 Your langchain or llama-cpp version could be outdated. Upgrade your packages by running install again.
 
 ```shell
@@ -260,40 +268,37 @@ Follow this [page](https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-
 
 This is a test project to validate the feasibility of a fully local solution for question answering using LLMs and Vector embeddings. It is not production ready, and it is not meant to be used in production. Vicuna-7B is based on the Llama model so that has the original Llama license.
 
-
-
 # Common Errors
 
- - [Torch not compatible with cuda enabled](https://github.com/pytorch/pytorch/issues/30664)
+ - [Torch not compatible with CUDA enabled](https://github.com/pytorch/pytorch/issues/30664)
 
-   -  Get cuda version
-
+   -  Get CUDA version
       ```shell
       nvcc --version
       ```
       ```shell
       nvidia-smi
       ```
-   - Try Install pytorch fepending on your cuda version
+   - Try installing PyTorch depending on your CUDA version
       ```shell
          conda install -c pytorch torchvision cudatoolkit=10.1 pytorch
       ```
-   - If doesn't work try re installing 
+   - If it doesn't work, try reinstalling
       ```shell
          pip uninstall torch
          pip cache purge
          pip install torch -f https://download.pytorch.org/whl/torch_stable.html
       ```
-- [ERROR: pip's dependency resolver does not currently take into account all the packages that are installed](https://stackoverflow.com/questions/72672196/error-pips-dependency-resolver-does-not-currently-take-into-account-all-the-pa/76604141#76604141)
-   ```shell
-      pip install h5py
-      pip install typing-extensions
-      pip install wheel
-   ```
-- [Failed to import transformers](https://github.com/huggingface/transformers/issues/11262)
-   - Try  re-install
-      ```shell
-         conda uninstall tokenizers, transformers
-         pip install transformers
-      ```
 
+- [ERROR: pip's dependency resolver does not currently take into account all the packages that are installed](https://stackoverflow.com/questions/72672196/error-pips-dependency-resolver-does-not-currently-take-into-account-all-the-pa/76604141#76604141)
+  ```shell
+     pip install h5py
+     pip install typing-extensions
+     pip install wheel
+  ```
+- [Failed to import transformers](https://github.com/huggingface/transformers/issues/11262)
+  - Try re-install
+    ```shell
+       conda uninstall tokenizers, transformers
+       pip install transformers
+    ```
