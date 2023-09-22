@@ -129,7 +129,7 @@ def main(device_type, source_directory):
     text_documents, python_documents = split_documents(documents)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     python_splitter = RecursiveCharacterTextSplitter.from_language(
-        language=Language.PYTHON, chunk_size=1000, chunk_overlap=200
+        language=Language.PYTHON, chunk_size=880, chunk_overlap=200
     )
     texts = text_splitter.split_documents(text_documents)
     texts.extend(python_splitter.split_documents(python_documents))
@@ -153,9 +153,9 @@ def main(device_type, source_directory):
         embeddings,
         persist_directory=PERSIST_DIRECTORY,
         client_settings=CHROMA_SETTINGS,
+
     )
-    db.persist()
-    db = None
+   
 
 
 if __name__ == "__main__":
